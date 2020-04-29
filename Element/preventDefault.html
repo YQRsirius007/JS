@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    .waring{
+      border: 2px solid #f39389;
+      border-radius: 2px;
+      padding: 10px;
+      position: absolute;
+      background-color: #fbd8d4;
+      color:#3b3c40;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <p>只能小写</p>
+  </div>
+  <form>
+    <input type="text" id="my-textbox">
+  </form>
+  <a href="#">a</a>
+<script>
+  var myTextbox = document.getElementById('my-textbox')
+  //监听ketpress事件
+  myTextbox.addEventListener('keypress',checkName, false)
+  //用checkName方法监听按键并决定是否允许按键的默认行文发生
+  function checkName(evt){
+    var charCode = evt.charCode
+    if(charCode != 0){
+      if(charCode <97 || charCode > 122){
+        evt.preventDefault();
+        displayWarning(
+          "Please use lowercase letters only."
+          + "\n" + "charCode: " + charCode + "\n"
+        )
+      }
+    }
+  }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <div>
+    <!-- 123 -->
+  </div>
+  <script>
+    var div = document.getElementsByTagName('div')[0]
+    console.log(div.childNodes)//子节点
+    console.log(div.hasChildNodes())//当前节点是否包含有子节点
+    //var result = div.firstChild !== null
+    //div.childNodes.length > 0
+    //div.hasCHildNodes()
+    console.log(div.children)//元素子节点
+    //div.childElementCount === div.children.length
+    console.log(div.childNodes[1].nodeType)
+
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    *{
+      margin:0;
+    }
+    .wrapper{
+      height: 500px;
+      width:500px;
+      border:1px solid black;
+      position:relative;
+      margin:20px;
+    }
+    .imgCont{
+      height: 100%;
+      width:100%;
+    }
+    .img{
+      height: 100%;
+      width:100%;
+      background:url('./2.jpg') 0% 0% no-repeat;
+      background-size:500px 500px;
+    }
+    .moveBox{
+      position:absolute;
+      cursor:move;
+      background-color:#eee;
+      opacity:0.3;
+      z-index:999;
+    }
+    .bigImg{
+      position:absolute;
+      top:0;
+      left:105%;
+      height: 500px;
+      width:500px;
+      border:1px solid black;
+      display:none;
+      overflow: hidden;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <div class="imgCont">
+      <div class="img"></div>
+      <div class="moveBox"></div>
+    </div>
+    <div class="bigImg">
+      <img src="./2.jpg" >
+    </div>
+  </div>
+
+  <script src="jquery.js">
+  </script>
+  <script>
+    var wrapper = $('.wrapper');
+    var imgCont = $('.imgCont');
+    var moveView = $('.moveBox');
+    var bigImg = $('.bigImg');
+    var w, h;
+    
+    function bindEvent(){
+      imgCont.on('mousemove',function(e){
+        console.log('aaa')
+        move(e, 2);
+      }).on('mouseleave',function(){
+        console.log('aaaAA')
+        moveView.hide();
+        bigImg.hide();
+      })
+    }
+    // 不一样的地方 当这个放大镜移动到图片边缘 图片再往边缘移动 放大镜也不跟着移动了
+    function move(event,mul){
+      w = 500 / mul;
+      h = 500 / mul;
+      var maxL = 500 - w;
+      var maxT = 500 - h;
+      var minL = 0;
+      var minT = 0;
+      var X= event.clientX - wrapper.offset().left - w / 2;
+      var Y = event.clientY - wrapper.offset().top - h / 2;
+      var endL = (X > minL) ? (X < maxL) ? X:maxL : minL;
+      var endT = (Y > minT) ? (Y < maxT) ? Y:maxT : minT;
+      moveView.css({
+        'height':h+'px',
+        'width':w + 'px',
+        'display':'block',
+        'left':endL + 'px',
+        'top':endT + 'px',
+      });
+      bigImg.css({
+        'display':'block'
+      }).find('img').css({
+        'width':mul*500 + 'px',
+        'height':mul*500 + 'px',
+        'margin-left':-endL*mul,
+        'margin-top': -endT*mul
+      })
+    }
+
+    bindEvent();
+  </script>
+</body>
+</html>

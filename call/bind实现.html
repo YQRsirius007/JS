@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    if(!Function.prototype.bind){
+      Function.prototype.bind = function(){
+        var self = this,
+            context = [].shift.call(arguments),
+            args = [].slice.call(arguments);//转化成真数组
+        return function(){
+          self.apply(context, [].concat.call(args, [].slice.call(arguments)));
+        }
+      }
+    }
+
+
+   Function.prototype.apply2 = function(){
+     var context = [].shift.call(arguments) || window,
+         args = [].slice.call(arguments);
+     console.log('context', context, args)
+     context.fn = this;
+     if(args){
+
+     }else{
+       context.fn();
+     }
+     var result = context.fn(...args);
+     delete context.fn;
+     return result;
+   }
+   var obj1 = {
+     name:'rdj'
+   };
+   function read(age, father){
+     console.log('my name is', this.name,'age',age, 'father', father)
+   }
+   read.apply2(obj1, [19, 'RDJ']);
+  </script>
+</body>
+</html>

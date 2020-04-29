@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <div class="wrapper" id="text"></div>
+</body>
+<script>
+  var ele = document.getElementById('text')
+  for(var name of ele.getAttributeNames()){
+    console.log(name, ele.getAttribute(name))
+  }
+  var obj = {
+    name:'rdj',
+    age:'18'
+  }
+  var arr = [10, 20]
+  for(let value in arr){
+    value +=1 
+    console.log(value)
+  }
+  console.log(arr)
+</script>
+</html>

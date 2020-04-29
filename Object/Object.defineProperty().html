@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    var o = {};
+    Object.defineProperty(o, "a", {
+      value: 37,
+      writable: true,
+      enumerable: true,
+      configurable: true
+    });
+    var bValue;
+    Object.defineProperty(o, "b", {
+      get: function(){
+        return bValue;
+      },
+      set: function(newValue){
+        bValue = newValue;
+      },
+      enumerable: true,
+      configurable: true
+    });
+    console.log("o", o);
+    o.b = 'rdj';
+    console.log("o", o);
+    Object.defineProperty(o, 'c', {
+      value:3,
+      writable:false,
+      //enumerable: true
+    });
+    o.c = 4;
+    console.log("o", o);
+    for(var i in o){
+      console.log(i);
+    }
+    var t = Object.assign({}, o);
+    //一般的setters和getters
+    function Archiver(){
+      var temperature = null;
+      var archive = [];
+
+      Object.defineProperty(this, 'temperature', {
+        get: function() {
+          console.log('get!');
+          return temperature;
+        },
+        set: function(value) {
+          temperature = value;
+          archive.push({ val: temperature });
+        }
+      });
+
+      this.getArchive = function() { return archive; };
+    }
+    var arc = new Archiver();
+    arc.temperature;
+    arc.temperature = 11;
+    arc.temperature = 13;
+    console.log(arc.getArchive());
+    //继承属性
+    //访问者属性是被继承的（父） get和set方法会在子对象的属性被访问或修改时被调用
+    //如果这些方法用一个变量存值，该值会被所有对象共享
+    function myClass() {
+
+    }
+    var value;
+    Object.defineProperty(myClass.prototype, "x", {
+      get() {
+         return value;
+        //return this.y;//某个被访问和修改属性的对象
+      },
+      set(x){
+        value = x;
+        //this.y = x;
+      }
+    });
+    var a = new myClass();
+    var b = new myClass();
+    a.x = 1;
+    console.log(b.x);
+    //不像访问者属性，值属性始终在对象自身上设置，而不是一个原型。然而，如果是一个不可写的
+    //属性被继承，它仍然可以防止修改对象的属性
+    //直接 原型测试
+    function test(){
+
+    }
+    test.prototype.q = null;
+    var t1 = new test();
+    var t2 = new test();
+    t1.__proto__.q = 1;
+    console.log('原型', t2.q);
+  </script>
+</body>
+</html>

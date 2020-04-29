@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+    const target = {a:1,b:2};
+    const source = {b:4,c:5};
+    //var f = {};
+    source.__proto__ = null;
+    const returnTarget = Object.assign(target, source);
+    console.log('return',returnTarget,'target',target,'source',source)
+    //返回值是目标对象 属性被源对象中的属性覆盖
+
+    //复制一个对象
+    var obj = {a:1};
+    var copy = Object.assign({}, obj);
+    obj.a = 2;
+    console.log('copy', copy);
+    //深度拷贝：实现不了 拷贝的是属性值 但是如果源对象的属性值是一个对象的引用，则指向引用
+    let origin = {a:0,b:{c:0}};
+    let obj1 =Object.assign({},origin);
+    //合并对象
+    var o1 = {a:1};
+    var o2 = {b:2};
+    var o3 = {c:3};
+    var o1 = Object.assign(o1,o2,o3);
+
+
+    if(typeof Object.assign != 'function') {
+        Object.defineProperty(Object, "assgin", {
+            value:function assgin(target, varArgs) {
+                'use strict';
+                if(target == null) {
+                    throw new TypeError('Cannot convert undefined or null to object');
+                }
+                let to = Object(target);
+
+                for(var index = 1; index < arguments.length; index ++) {
+                    var nextSource = arguments[index];
+
+                    if(nextSource != null) {
+                        for(let nextKey in nextSource){
+                            if(Object.prototype.hasOwnProperty.call(nextSource, nextKey)) {
+                                to[nextKey] = nextSource[nextKey];
+                            }
+                        }
+                    }
+                }
+                return to;
+            },
+            writable: true,
+            configurable: true
+        })
+    }
+    </script>
+</body>
+</html>

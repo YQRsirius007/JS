@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    var value='window';
+    var obj={
+      value:'obj'
+    }
+    function show(name,age){
+      console.log(this.value);
+      return{
+        name:name,
+        age:age
+      }
+    }
+  var result = show.call(obj,'rdj',18);
+    // 相当于在obj下添加了一个show方法，再执行
+    // obj.show=show obj.show()
+  Function.prototype.call2 = function(){
+    var context = [].shift.call(arguments) || window
+    console.log('context', context)
+    context.fn = this
+    var args = arguments
+    //console.log('...',...arguments)
+    var result = context.fn(...arguments)
+    delete context.fn 
+    return result
+  }
+
+
+  console.log('call2',show.call2(null,'jimin',18))
+  Function.prototype.newCall = function(){
+    var ctx = arguments[0] || window
+    ctx.fn = this
+    var args = []
+    for(var i=1;i<arguments.length;i++){
+      args.push('arguments['+i+']')
+      console.log('args', args)
+    }
+    var result = eval('ctx.fn('+args.join(',')+')')
+    delete ctx.fn
+    return result
+  }
+  console.log(show.newCall(obj,'rdj',18));
+
+  Function.prototype.newApply = function(ctx, arr){
+    var ctx = ctx || window
+    ctx.fn=this
+    if(!arr){
+      var result = ctx.fn()
+      delete ctx.fn
+      return result
+    }else{
+      var args = []
+      for(var i=1;i<arguments.length;i++){
+        args.push('arguments['+i+']')
+      }
+      var result = eval('ctx.fn('+args.join(',')+')')
+      delete ctx.fn
+      return result
+    }
+  }
+
+ 
+  console.log('...',...'abc')
+  var res = show.newApply(obj,['r',11]);
+  </script>
+</body>
+</html>

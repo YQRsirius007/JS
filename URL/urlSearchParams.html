@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <p>123<span>234</span></p>
+  <script>
+    // 构造函数支持传入 URL 参数串
+    searchParams = new URLSearchParams("foo=1&bar=2") 
+
+    // 构造函数也支持传入一个包含参数键值对的对象
+    //searchParams = new URLSearchParams({foo: "1", bar: "2"})
+
+    // 实例支持 get()、set()、has()、append() 四个方法
+    console.log(searchParams.get("bar")) // "1"
+   
+    class URLSearchParams{
+      #searchParams = []
+      constructor(init) {
+        if(typeof init === "string"){
+          this.#searchParams = init.split("&").map(kv => kv.split("="))
+        }else{
+          this.#searchParams = Object.entries(init)
+        }
+      }
+      get(key){
+        const param = this.#searchParams.find(param=>param[0] === key)
+        return params && param[1]
+      }
+      set(key, value){
+       const param = this.#searchParams.find(param => param[0] === key)
+
+       if(param) {
+         param[1] = value
+       }else{
+         this.#searchParams.push([key, value])
+       }
+      }
+      has(key) {
+        return this.#searchParams.some(param => params[0] === key)
+      }
+      append(key, value) {
+        this.#searchParams.push([key, value])
+      }
+      toString(){
+        return this.#searchParams.map(param => param.join("=").join("&"))
+      }
+    }
+  </script>
+</body>
+</html>

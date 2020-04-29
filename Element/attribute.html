@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <!-- <div>
+    <a href="#" data-log="1">aa</a>
+  </div> -->
+  <div></div>
+  <span></span>
+  <strong></strong>
+
+  <div class="example">
+    <p class="slogan">???</p>
+  </div>
+  <script>
+    // var div = document.getElementsByTagName('div')[0]
+    // var a = document.getElementsByTagName('a')[0]
+    // a.onclick = function(){
+    //   //ajax发送到服务器
+    //   console.log(this.getAttribute('data-log'))
+    // }
+    var all = document.getElementsByTagName('*')
+    console.log('all is array:', Array.isArray(all))
+    for(var i = 0; i < all.length; i ++){
+      all[i].setAttribute('this-name', all[i].nodeName)
+    }
+  </script>
+</body>
+</html>
